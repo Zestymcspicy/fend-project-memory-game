@@ -7,6 +7,7 @@ const symbolArray = ["cube", "cube", "anchor", "anchor", "bolt", "bolt", "leaf",
 let oldDeck = document.querySelector("ul.deck")
 let newDeck = document.createElement("ul");
 newDeck.className = "deck";
+let openList = [];
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -18,6 +19,7 @@ function newGame() {
     let presentCardSymbol = document.createElement("i");
     presentCardSymbol.className = `fa fa-${cardSymbol}`;
     let presentCard = document.createElement("li");
+    presentCard.id = `${cardSymbol}`;
     presentCard.className = "card";
     presentCard.appendChild(presentCardSymbol);
     newDeck.appendChild(presentCard);
@@ -40,10 +42,16 @@ function shuffle(array) {
 }
 
 newGame();
-
+//make the cards flip
 function cardFlip(theCard){
   theCard.classList.add("open","show");
+  addToOpenList(theCard);
 }
+//store the cards
+function addToOpenList(theCard){
+  openList.push(`${theCard.id}`);
+}
+
 newDeck.addEventListener("click", function(event) {
   if (event.target.nodeName === "LI") {
     cardFlip(event.target);
