@@ -52,11 +52,34 @@ function addToOpenList(theCard){
   openList.push(`${theCard.id}`);
 }
 
+function isItAMatch(theCard) {
+  if (openList.length > 1) {
+    if (`${theCard.id}` === openList[(openList.length -2)]) {
+      itIsAMatch(theCard);
+    }
+    else {
+      flipThemBack();
+    }
+  }
+}
 newDeck.addEventListener("click", function(event) {
   if (event.target.nodeName === "LI") {
     cardFlip(event.target);
+    isItAMatch(event.target);
   }
 })
+
+function itIsAMatch(theCard){
+  theCard.classList.add("match");
+  theCard.classList.remove("open","show");
+  let theMatch = document.querySelector(`#${theCard.id}.card.open.show`);
+  theMatch.classList.add("match");
+  theMatch.classList.remove("open","show");
+}
+
+function flipThemBack(){
+  
+}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
