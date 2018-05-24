@@ -7,6 +7,7 @@ const symbolArray = ["cube", "cube", "anchor", "anchor", "bolt", "bolt", "leaf",
 let oldDeck = document.querySelector("ul.deck")
 let newDeck = document.createElement("ul");
 newDeck.className = "deck";
+let clearList = [];
 let openList = [];
 /*
  * Display the cards on the page
@@ -55,13 +56,14 @@ function addToOpenList(theCard){
 function isItAMatch(theCard) {
   if (openList.length > 1) {
     if (`${theCard.id}` === openList[(openList.length -2)]) {
-      itIsAMatch(theCard);
+      matchedCards(theCard);
     }
     else {
-      flipThemBack();
+      flipThemBack(theCard);
     }
   }
 }
+
 newDeck.addEventListener("click", function(event) {
   if (event.target.nodeName === "LI") {
     cardFlip(event.target);
@@ -69,16 +71,21 @@ newDeck.addEventListener("click", function(event) {
   }
 })
 
-function itIsAMatch(theCard){
+function matchedCards(theCard){
   theCard.classList.add("match");
   theCard.classList.remove("open","show");
   let theMatch = document.querySelector(`#${theCard.id}.card.open.show`);
   theMatch.classList.add("match");
   theMatch.classList.remove("open","show");
+  clearList = clearList.concat(openList);
+  openList = [];
 }
-
-function flipThemBack(){
-  
+//TODO: fix this function. figure out how to set timeout
+function flipThemBack(theCard){
+  theCard.className = "card";
+  let noMatch = document.querySelector(`#${openList[(openList.length - 2)]}.open.show`);
+  noMatch.className = "card";
+  openList.splice(openList.length - 2, 2);
 }
 /*
  * set up the event listener for a card. If a card is clicked:
