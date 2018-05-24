@@ -1,20 +1,28 @@
 /*
  * Create a list that holds all of your cards
  */
-const cardArray = ["cube", "cube", "anchor", "anchor", "bolt", "bolt", "leaf",
+const symbolArray = ["cube", "cube", "anchor", "anchor", "bolt", "bolt", "leaf",
 "leaf", "diamond", "diamond", "bicycle", "bicycle", "paper-plane-o",
  "paper-plane-o", "bomb", "bomb"];
-const deckFragment = document.createDocumentFragment();
+let oldDeck = document.querySelector("ul.deck")
+let newDeck = document.createElement("ul");
+newDeck.className = "deck";
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-for (const cardSymbol of (shuffle(cardArray))){
-  let presentCard = document.createElement("i");
-  presentCard.className= `fa fa-${cardSymbol}`;
-  deckFragment.appendChild(presentCard);
+function newGame() {
+  for (const cardSymbol of (shuffle(symbolArray))){
+    let presentCardSymbol = document.createElement("i");
+    presentCardSymbol.className = `fa fa-${cardSymbol}`;
+    let presentCard = document.createElement("li");
+    presentCard.className = "card";
+    presentCard.appendChild(presentCardSymbol);
+    newDeck.appendChild(presentCard);
+  }
+  oldDeck.parentNode.replaceChild(newDeck, oldDeck);
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -31,7 +39,7 @@ function shuffle(array) {
     return array;
 }
 
-console.log (deckFragment)
+newGame();
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
