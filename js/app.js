@@ -40,6 +40,15 @@ function shuffle(array) {
 }
 
 newGame();
+
+function cardFlip(theCard){
+  theCard.classList.add("open","show");
+}
+newDeck.addEventListener("click", function(event) {
+  if (event.target.nodeName === "LI") {
+    cardFlip(event.target);
+  }
+})
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
