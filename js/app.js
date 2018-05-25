@@ -82,10 +82,12 @@ function matchedCards(theCard){
 }
 //TODO: fix this function. figure out how to set timeout
 function flipThemBack(theCard){
-  theCard.className = "card";
-  let noMatch = document.querySelector(`#${openList[(openList.length - 2)]}.open.show`);
-  noMatch.className = "card";
-  openList.splice(openList.length - 2, 2);
+  setTimeout(function () {
+    theCard.className = "card";
+    let noMatch = document.querySelector(`#${openList[(openList.length - 2)]}.open.show`);
+    noMatch.className = "card";
+    openList.splice(openList.length - 2, 2);
+}, 2000);
 }
 /*
  * set up the event listener for a card. If a card is clicked:
