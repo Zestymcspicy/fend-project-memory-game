@@ -8,6 +8,7 @@ let clearList = [];
 let openList = [];
 let moveScore = document.querySelector("span");
 let oldDeck = document.querySelector("ul.deck");
+const restar
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -29,6 +30,7 @@ function newGame() {
   oldDeck.parentNode.replaceChild(newDeck, oldDeck);
   moveScore.innerHTML = "0";
   oldDeck = newDeck;
+  deckListener(oldDeck);
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -65,15 +67,16 @@ function isItAMatch(theCard) {
     }
   }
 
-
-oldDeck.addEventListener("click", function(event) {
-  if (event.target.nodeName === "LI") {
-    cardFlip(event.target);
+function deckListener(deck) {
+  deck.addEventListener("click", function(event) {
+    if (event.target.nodeName === "LI") {
+      cardFlip(event.target);
     if (openList.length === 2) {
       isItAMatch(event.target);
   }
 }
 })
+}
 
 function matchedCards(theCard){
   theCard.classList.add("match");
