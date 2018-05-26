@@ -4,11 +4,10 @@
 const symbolArray = ["cube", "cube", "anchor", "anchor", "bolt", "bolt", "leaf",
 "leaf", "diamond", "diamond", "bicycle", "bicycle", "paper-plane-o",
  "paper-plane-o", "bomb", "bomb"];
-let oldDeck = document.querySelector("ul.deck")
-let newDeck = document.createElement("ul");
-newDeck.className = "deck";
 let clearList = [];
 let openList = [];
+let moveScore = document.querySelector("span");
+let oldDeck = document.querySelector("ul.deck");
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -16,6 +15,8 @@ let openList = [];
  *   - add each card's HTML to the page
  */
 function newGame() {
+  let newDeck = document.createElement("ul");
+  newDeck.className = "deck";
   for (const cardSymbol of (shuffle(symbolArray))){
     let presentCardSymbol = document.createElement("i");
     presentCardSymbol.className = `fa fa-${cardSymbol}`;
@@ -26,6 +27,8 @@ function newGame() {
     newDeck.appendChild(presentCard);
   }
   oldDeck.parentNode.replaceChild(newDeck, oldDeck);
+  moveScore.innerHTML = "0";
+  oldDeck = newDeck;
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -54,7 +57,6 @@ function addToOpenList(theCard){
 }
 
 function isItAMatch(theCard) {
-  if (openList.length > 1) {
     if (`${theCard.id}` === openList[(openList.length -2)]) {
       matchedCards(theCard);
     }
@@ -62,13 +64,15 @@ function isItAMatch(theCard) {
       flipThemBack(theCard);
     }
   }
-}
 
-newDeck.addEventListener("click", function(event) {
+
+oldDeck.addEventListener("click", function(event) {
   if (event.target.nodeName === "LI") {
     cardFlip(event.target);
-    isItAMatch(event.target);
+    if (openList.length === 2) {
+      isItAMatch(event.target);
   }
+}
 })
 
 function matchedCards(theCard){
@@ -84,11 +88,13 @@ function matchedCards(theCard){
 function flipThemBack(theCard){
   setTimeout(function () {
     theCard.className = "card";
-    let noMatch = document.querySelector(`#${openList[(openList.length - 2)]}.open.show`);
+    let noMatch = document.querySelector(`#${openList[1]}.open.show`);
     noMatch.className = "card";
     openList.splice(openList.length - 2, 2);
 }, 2000);
 }
+
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
