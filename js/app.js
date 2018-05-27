@@ -6,9 +6,22 @@ const symbolArray = ["cube", "cube", "anchor", "anchor", "bolt", "bolt", "leaf",
  "paper-plane-o", "bomb", "bomb"];
 let clearList = [];
 let openList = [];
-let moveScore = document.querySelector("span");
+let moveScoreDisplay = document.querySelector("span");
 let oldDeck = document.querySelector("ul.deck");
-const restar
+let restartGame = document.querySelector("div.restart");
+let moveScore = 0;
+moveScoreDisplay.innerHTML = `${moveScore}`;
+
+const cardCheck = function(event) {
+  if (event.target.nodeName === "LI") {
+    cardFlip(event.target);
+  if ((openList.length) === 2) {
+    oldDeck.removeEventListener("click", cardCheck, false);
+    isItAMatch(event.target);
+}
+}
+}
+restartGame.addEventListener("click",newGame());
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -27,10 +40,10 @@ function newGame() {
     presentCard.appendChild(presentCardSymbol);
     newDeck.appendChild(presentCard);
   }
+  moveScore = 0;
   oldDeck.parentNode.replaceChild(newDeck, oldDeck);
-  moveScore.innerHTML = "0";
   oldDeck = newDeck;
-  deckListener(oldDeck);
+  deckListener();
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -59,7 +72,7 @@ function addToOpenList(theCard){
 }
 
 function isItAMatch(theCard) {
-    if (`${theCard.id}` === openList[(openList.length -2)]) {
+    if (`${theCard.id}` === openList[0]) {
       matchedCards(theCard);
     }
     else {
@@ -67,16 +80,10 @@ function isItAMatch(theCard) {
     }
   }
 
-function deckListener(deck) {
-  deck.addEventListener("click", function(event) {
-    if (event.target.nodeName === "LI") {
-      cardFlip(event.target);
-    if (openList.length === 2) {
-      isItAMatch(event.target);
-  }
+function deckListener() {
+  oldDeck.addEventListener("click", cardCheck);
 }
-})
-}
+
 
 function matchedCards(theCard){
   theCard.classList.add("match");
@@ -86,16 +93,20 @@ function matchedCards(theCard){
   theMatch.classList.remove("open","show");
   clearList = clearList.concat(openList);
   openList = [];
+  deckListener();
 }
-//TODO: fix this function. figure out how to set timeout
+
 function flipThemBack(theCard){
   setTimeout(function () {
     theCard.className = "card";
-    let noMatch = document.querySelector(`#${openList[1]}.open.show`);
+    let noMatch = document.querySelector(`#${openList[0]}.open.show`);
     noMatch.className = "card";
-    openList.splice(openList.length - 2, 2);
+    openList = [];
+    setTimeout(deckListener(), 500);
 }, 2000);
+  moveScore ++ 1;
 }
+
 
 
 /*
