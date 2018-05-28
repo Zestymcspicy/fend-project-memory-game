@@ -6,7 +6,7 @@ const symbolArray = ["cube", "cube", "anchor", "anchor", "bolt", "bolt", "leaf",
  "paper-plane-o", "bomb", "bomb"];
 let clearList = [];
 let openList = [];
-let moveScoreDisplay = document.querySelector("span");
+const moveScoreDisplay = document.querySelector("span");
 let oldDeck = document.querySelector("ul.deck");
 let restartGame = document.querySelector("div.restart");
 let moveScore = 0;
@@ -104,7 +104,7 @@ function flipThemBack(theCard){
     openList = [];
     setTimeout(deckListener(), 500);
 }, 2000);
-  moveScore ++ 1;
+  moveScore++;
 }
 
 
