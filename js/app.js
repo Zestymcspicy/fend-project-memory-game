@@ -16,6 +16,8 @@ const cardCheck = function(event) {
   if (event.target.nodeName === "LI") {
     cardFlip(event.target);
   if ((openList.length) === 2) {
+    moveScore++;
+    moveScoreDisplay.innerHTML = `${moveScore}`;
     oldDeck.removeEventListener("click", cardCheck, false);
     isItAMatch(event.target);
 }
@@ -85,14 +87,17 @@ function deckListener() {
   oldDeck.addEventListener("click", cardCheck);
 }
 
+function partOfMatch(aCard){
+  aCard.classList.add("match");
+  aCard.classList.remove("open","show");
+  aCard.parentNode.removeEventListener("click", cardCheck, true);
+}
 
 function matchedCards(theCard){
-  theCard.classList.add("match");
-  theCard.classList.remove("open","show");
+  partOfMatch(theCard);
   let theMatch = document.querySelector(`#${theCard.id}.card.open.show`);
-  theMatch.classList.add("match");
-  theMatch.classList.remove("open","show");
-  clearList = clearList.concat(openList);
+  partOfMatch(theMatch);
+  clearList= clearList.concat(openList);
   openList = [];
   deckListener();
 }
@@ -105,7 +110,6 @@ function flipThemBack(theCard){
     openList = [];
     setTimeout(deckListener(), 500);
 }, 2000);
-  moveScore++;
 }
 
 
