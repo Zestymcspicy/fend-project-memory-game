@@ -119,7 +119,8 @@ function flipThemBack(theCard){
 }
 
 const youAreTheWinner = function(){
-  alert(`Way to go! You won in ${moveScore} moves!`)
+  alert(`Way to go! You won in ${moveScore} moves!`);
+  newGame();
 }
 
 
