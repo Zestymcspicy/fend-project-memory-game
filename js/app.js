@@ -8,7 +8,7 @@ let clearList = [];
 let openList = [];
 const moveScoreDisplay = document.querySelector("span");
 let oldDeck = document.querySelector("ul.deck");
-let restartGame = document.querySelector("div.restart");
+let restartGame = document.querySelector(".restart");
 let moveScore = 0;
 moveScoreDisplay.innerHTML = `${moveScore}`;
 
@@ -21,14 +21,13 @@ const cardCheck = function(event) {
 }
 }
 }
-restartGame.addEventListener("click",newGame());
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-function newGame() {
+const newGame = function() {
   let newDeck = document.createElement("ul");
   newDeck.className = "deck";
   for (const cardSymbol of (shuffle(symbolArray))){
@@ -59,6 +58,8 @@ function shuffle(array) {
 
     return array;
 }
+
+restartGame.addEventListener("click", newGame);
 
 newGame();
 //make the cards flip
