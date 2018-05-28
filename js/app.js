@@ -10,9 +10,11 @@ const moveScoreDisplay = document.querySelector("span");
 let oldDeck = document.querySelector("ul.deck");
 let restartGame = document.querySelector(".restart");
 let moveScore = 0;
-moveScoreDisplay.innerHTML = `${moveScore}`;
 
 const cardCheck = function(event) {
+  if (clearList.includes(event.target.id)){
+    return(console.log("nope"));
+  }
   if (event.target.nodeName === "LI") {
     cardFlip(event.target);
   if ((openList.length) === 2) {
@@ -20,8 +22,8 @@ const cardCheck = function(event) {
     moveScoreDisplay.innerHTML = `${moveScore}`;
     oldDeck.removeEventListener("click", cardCheck, false);
     isItAMatch(event.target);
-}
-}
+  }
+  }
 }
 /*
  * Display the cards on the page
@@ -42,6 +44,7 @@ const newGame = function() {
     newDeck.appendChild(presentCard);
   }
   moveScore = 0;
+  moveScoreDisplay.innerHTML = `${moveScore}`;
   oldDeck.parentNode.replaceChild(newDeck, oldDeck);
   oldDeck = newDeck;
   deckListener();
@@ -99,6 +102,9 @@ function matchedCards(theCard){
   partOfMatch(theMatch);
   clearList= clearList.concat(openList);
   openList = [];
+  if (clearList.length === 16){
+    youAreTheWinner();
+  }
   deckListener();
 }
 
@@ -109,7 +115,11 @@ function flipThemBack(theCard){
     noMatch.className = "card";
     openList = [];
     setTimeout(deckListener(), 500);
-}, 2000);
+}, 1000);
+}
+
+const youAreTheWinner = function(){
+  alert(`Way to go! You won in ${moveScore} moves!`)
 }
 
 
