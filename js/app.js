@@ -10,6 +10,7 @@ const moveScoreDisplay = document.querySelector("span");
 let oldDeck = document.querySelector("ul.deck");
 let restartGame = document.querySelector(".restart");
 let moveScore = 0;
+const starBox = document.querySelector(".stars");
 
 const cardCheck = function(event) {
   if (clearList.includes(event.target.id)){
@@ -20,6 +21,7 @@ const cardCheck = function(event) {
     cardFlip(event.target);
   if ((openList.length) === 2) {
     moveScore++;
+    theStars(moveScore);
     moveScoreDisplay.innerHTML = `${moveScore}`;
     oldDeck.removeEventListener("click", cardCheck, false);
     isItAMatch(event.target);
@@ -65,19 +67,23 @@ function shuffle(array) {
     return array;
 }
 
+//restart button
 restartGame.addEventListener("click", newGame);
 
 newGame();
+
 //make the cards flip
 function cardFlip(theCard){
   theCard.classList.add("open","show");
   addToOpenList(theCard);
 }
+
 //store the cards
 function addToOpenList(theCard){
   openList.push(`${theCard.id}`);
 }
 
+//checks for a match
 function isItAMatch(theCard) {
     if (`${theCard.id}` === openList[0]) {
       matchedCards(theCard);
@@ -125,7 +131,19 @@ const youAreTheWinner = function(){
   newGame();
 }
 
+function starDown (){
+  star = starBox.querySelector("li");
+  starBox.removeChild(star);
+}
 
+const theStars = function(score) {
+  if (score === 10){
+    starDown();
+  }
+  if (score === 20){
+    starDown();
+  }
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
