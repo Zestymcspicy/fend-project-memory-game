@@ -11,6 +11,9 @@ let oldDeck = document.querySelector("ul.deck");
 let restartGame = document.querySelector(".restart");
 let moveScore = 0;
 const starBox = document.querySelector(".stars");
+let startingTime = 0;
+let endingTime = 0;
+let timer = document.querySelector(".timer");
 
 const cardCheck = function(event) {
   if (clearList.includes(event.target.id)){
@@ -50,6 +53,7 @@ const newGame = function() {
   moveScoreDisplay.innerHTML = `${moveScore}`;
   oldDeck.parentNode.replaceChild(newDeck, oldDeck);
   oldDeck = newDeck;
+  startingTime = performance.now();
   deckListener();
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -127,7 +131,9 @@ function flipThemBack(theCard){
 }
 
 const youAreTheWinner = function(){
-  alert(`Way to go! You won in ${moveScore} moves!`);
+  endingTime = performance.now();
+  alert(`Way to go! You won in ${moveScore} moves! It took
+    ${Math.round((endingTime-startingTime)/1000)} seconds`);
   newGame();
 }
 
@@ -144,6 +150,10 @@ const theStars = function(score) {
     starDown();
   }
 }
+
+setInterval( function() {
+  timer.innerHTML = `${Math.round((performance.now()-startingTime)/1000,1)}`;
+}, 100);
 
 /*
  * set up the event listener for a card. If a card is clicked:

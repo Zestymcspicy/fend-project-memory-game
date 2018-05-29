@@ -104,6 +104,11 @@ h1 {
     display: inline-block;
 }
 
+.timer {
+  font-family: 'Orbitron', sans-serif;
+
+}
+
 .score-panel .restart {
     float: right;
     cursor: pointer;
