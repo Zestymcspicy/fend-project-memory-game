@@ -13,6 +13,7 @@ let moveScore = 0;
 
 const cardCheck = function(event) {
   if (clearList.includes(event.target.id)){
+    //had to handle errors from clicking on open cards
     return(console.log("nope"));
   }
   if (event.target.nodeName === "LI") {
@@ -96,6 +97,7 @@ function partOfMatch(aCard){
   aCard.parentNode.removeEventListener("click", cardCheck, true);
 }
 
+//handles matches and calls a win
 function matchedCards(theCard){
   partOfMatch(theCard);
   let theMatch = document.querySelector(`#${theCard.id}.card.open.show`);
