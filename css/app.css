@@ -34,6 +34,33 @@ h1 {
 }
 
 /*
+modal styles
+*/
+.modal{
+  margin-top: 35%;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  width: 80%;
+  height: 100%;
+}
+
+.modal-content{
+  background-color: #f005a0;
+}
+
+footer{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+button{
+  color: #0588dd;
+  width: 15%;
+  margin: 0 0 2% 23%;
+
+}
+/*
  * Styles for the deck of cards
  */
 
