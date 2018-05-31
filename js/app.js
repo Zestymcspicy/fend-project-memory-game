@@ -148,6 +148,10 @@ playAgainButton.addEventListener("click", function (){
   newGame();
 });
 
+noThanksButton.addEventListener("click", function() {
+  location.replace("https://www.udacity.com")
+});
+
 function starDown (){
   star = starBox.querySelector("li");
   starBox.removeChild(star);
