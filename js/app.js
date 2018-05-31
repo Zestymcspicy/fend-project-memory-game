@@ -15,6 +15,9 @@ let startingTime = 0;
 let endingTime = 0;
 let timer = document.querySelector(".timer");
 const winModal = document.getElementById("win-modal");
+let starScore = 3;
+const playAgainButton = document.querySelector("#play-again");
+const noThanksButton = document.querySelector("#no-thanks");
 
 const cardCheck = function(event) {
   if (clearList.includes(event.target.id)){
@@ -56,6 +59,7 @@ const newGame = function() {
   oldDeck = newDeck;
   startingTime = performance.now();
   deckListener();
+  clearList = [];
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -136,23 +140,25 @@ const youAreTheWinner = function(){
   winModal.style.display = "block";
   document.getElementById("modal-text").innerHTML = `Way to go! You won in
   ${moveScore} moves! It took ${Math.round((endingTime-startingTime)/1000)}
-  seconds`;
+  seconds. You scored ${starScore} stars!`;
 }
-//   alert(`Way to go! You won in ${moveScore} moves! It took
-//     ${Math.round((endingTime-startingTime)/1000)} seconds`);
-//   newGame();
-// }
+
+playAgainButton.addEventListener("click", function (){
+  winModal.style.display = "none";
+  newGame();
+});
 
 function starDown (){
   star = starBox.querySelector("li");
   starBox.removeChild(star);
+  starScore--;
 }
 
 const theStars = function(score) {
-  if (score === 10){
+  if (score === 11){
     starDown();
   }
-  if (score === 20){
+  if (score === 21){
     starDown();
   }
 }
