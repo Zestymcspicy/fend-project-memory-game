@@ -14,11 +14,15 @@ const starBox = document.querySelector(".stars");
 let startingTime = 0;
 let endingTime = 0;
 let timer = document.querySelector(".timer");
-timer.innerHTML = 0;
 const winModal = document.getElementById("win-modal");
 let starScore = 3;
 const playAgainButton = document.querySelector("#play-again");
 const noThanksButton = document.querySelector("#no-thanks");
+//running timer at the top of the screen
+let runTimer = setInterval( function () {
+    timer.innerHTML = `${Math.round((performance.now()-startingTime)/1000,1)}`;
+  }, 100);
+
 
 const cardCheck = function(event) {
   if ((clearList.includes(event.target))||(openList[0] === event.target)){
@@ -43,6 +47,7 @@ const cardCheck = function(event) {
  *   - add each card's HTML to the page
  */
 const newGame = function() {
+  clearInterval(runTimer);
   let newDeck = document.createElement("ul");
   newDeck.className = "deck";
   for (const cardSymbol of (shuffle(symbolArray))){
@@ -54,6 +59,7 @@ const newGame = function() {
     presentCard.appendChild(presentCardSymbol);
     newDeck.appendChild(presentCard);
   }
+  timer.innerHTML = 0;
   moveScore = 0;
   moveScoreDisplay.innerHTML = `${moveScore}`;
   oldDeck.parentNode.replaceChild(newDeck, oldDeck);
@@ -85,8 +91,9 @@ newGame();
 function cardFlip(theCard){
   theCard.classList.add("open","show");
   addToOpenList(theCard);
+  // trying to start the timer with the proper checks in place
   if ((moveScore === 0) && (openList.length === 1)) {
-    runTimer();
+    runTimer;
     startingTime = performance.now();
   }
 }
@@ -172,12 +179,6 @@ const theStars = function(score) {
   }
 }
 
-//running timer at the top of the screen
-function runTimer (){
-  setInterval( function() {
-    timer.innerHTML = `${Math.round((performance.now()-startingTime)/1000,1)}`;
-  }, 100);
-}
 
 /*
  * set up the event listener for a card. If a card is clicked:
