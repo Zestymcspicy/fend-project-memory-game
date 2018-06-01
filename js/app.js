@@ -19,10 +19,15 @@ let starScore = 3;
 const playAgainButton = document.querySelector("#play-again");
 const noThanksButton = document.querySelector("#no-thanks");
 //running timer at the top of the screen
-let runTimer = setInterval( function () {
-    timer.innerHTML = `${Math.round((performance.now()-startingTime)/1000,1)}`;
-  }, 100);
+let clockRun = setInterval(theClock, 1000)
 
+function theClock () {
+    timer.innerHTML = `${Math.round((performance.now()-startingTime)/1000,1)}`;
+}
+
+function stopTheClock () {
+  clearInterval(clockRun);
+}
 
 const cardCheck = function(event) {
   if ((clearList.includes(event.target))||(openList[0] === event.target)){
@@ -47,7 +52,7 @@ const cardCheck = function(event) {
  *   - add each card's HTML to the page
  */
 const newGame = function() {
-  clearInterval(runTimer);
+  stopTheClock();
   let newDeck = document.createElement("ul");
   newDeck.className = "deck";
   for (const cardSymbol of (shuffle(symbolArray))){
@@ -65,6 +70,7 @@ const newGame = function() {
   oldDeck.parentNode.replaceChild(newDeck, oldDeck);
   oldDeck = newDeck;
   deckListener();
+  openList = [];
   clearList = [];
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -93,7 +99,7 @@ function cardFlip(theCard){
   addToOpenList(theCard);
   // trying to start the timer with the proper checks in place
   if ((moveScore === 0) && (openList.length === 1)) {
-    runTimer;
+    clockRun = setInterval(theClock, 1000);
     startingTime = performance.now();
   }
 }
@@ -148,6 +154,7 @@ function flipThemBack(theCard){
 }
 //winner function with modal
 const youAreTheWinner = function(){
+  stopTheClock();
   endingTime = performance.now();
   winModal.style.display = "block";
   document.getElementById("modal-text").innerHTML = `Way to go! You won in
