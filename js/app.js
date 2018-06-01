@@ -14,13 +14,14 @@ const starBox = document.querySelector(".stars");
 let startingTime = 0;
 let endingTime = 0;
 let timer = document.querySelector(".timer");
+timer.innerHTML = 0;
 const winModal = document.getElementById("win-modal");
 let starScore = 3;
 const playAgainButton = document.querySelector("#play-again");
 const noThanksButton = document.querySelector("#no-thanks");
 
 const cardCheck = function(event) {
-  if (clearList.includes(event.target.id)){
+  if ((clearList.includes(event.target))||(openList[0] === event.target)){
     //had to handle errors from clicking on open cards
     return(console.log("nope"));
   }
@@ -57,7 +58,6 @@ const newGame = function() {
   moveScoreDisplay.innerHTML = `${moveScore}`;
   oldDeck.parentNode.replaceChild(newDeck, oldDeck);
   oldDeck = newDeck;
-  startingTime = performance.now();
   deckListener();
   clearList = [];
 }
@@ -85,16 +85,20 @@ newGame();
 function cardFlip(theCard){
   theCard.classList.add("open","show");
   addToOpenList(theCard);
+  if ((moveScore === 0) && (openList.length === 1)) {
+    runTimer();
+    startingTime = performance.now();
+  }
 }
 
 //store the cards
 function addToOpenList(theCard){
-  openList.push(`${theCard.id}`);
+  openList.push(theCard);
 }
 
 //checks for a match
 function isItAMatch(theCard) {
-    if (`${theCard.id}` === openList[0]) {
+    if (`${theCard.id}` === openList[0].id) {
       matchedCards(theCard);
     }
     else {
@@ -102,6 +106,7 @@ function isItAMatch(theCard) {
     }
   }
 
+//used to turn the listener on as it has to be off sometimes
 function deckListener() {
   oldDeck.addEventListener("click", cardCheck);
 }
@@ -115,7 +120,7 @@ function partOfMatch(aCard){
 //handles matches and calls a win
 function matchedCards(theCard){
   partOfMatch(theCard);
-  let theMatch = document.querySelector(`#${theCard.id}.card.open.show`);
+  let theMatch = openList[0];
   partOfMatch(theMatch);
   clearList= clearList.concat(openList);
   openList = [];
@@ -128,7 +133,7 @@ function matchedCards(theCard){
 function flipThemBack(theCard){
   setTimeout(function () {
     theCard.className = "card";
-    let noMatch = document.querySelector(`#${openList[0]}.open.show`);
+    let noMatch = openList[0];
     noMatch.className = "card";
     openList = [];
     setTimeout(deckListener(), 500);
@@ -168,9 +173,11 @@ const theStars = function(score) {
 }
 
 //running timer at the top of the screen
-setInterval( function() {
-  timer.innerHTML = `${Math.round((performance.now()-startingTime)/1000,1)}`;
-}, 100);
+function runTimer (){
+  setInterval( function() {
+    timer.innerHTML = `${Math.round((performance.now()-startingTime)/1000,1)}`;
+  }, 100);
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
