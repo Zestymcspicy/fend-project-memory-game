@@ -23,6 +23,11 @@ For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
 ## Resources
 
 font-awesome:
+
 https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css
+
 Coda and Orbitron fonts:
+
 https://fonts.googleapis.com/css?family=Coda|Orbitron
+
+For help with the modal box, I visited [this page](https://www.w3schools.com/howto/howto_css_modals.asp) on W3Schools.
