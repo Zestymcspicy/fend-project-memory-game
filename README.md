@@ -4,6 +4,9 @@
 
 * [Instructions](#instructions)
 * [Contributing](#contributing)
+* [How to Play](#how-to-play)
+* [Installation](#installation)
+* [Dependencies](#dependencies)
 * [Resources](#resources)
 
 ## Instructions
@@ -20,14 +23,20 @@ This repository is the starter code for _all_ Udacity students. Therefore, we mo
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## How to Play
+
+The goal is to match all the cards. When you flip a card the timer starts.  You may only have two unmatched cards flipped at a time.  Every two cards flipped counts as a move.  After ten moves, you lose a star.  After twenty moves, you lose another star.  Upon winning you can play again, or go to a really awesome website where you can learn to build a thing like this yourself!
+
+## Installation
+
+You can either clone this repository or download and decompress the zip file.  Go to your browser and open the index.html file in the directory where you cloned or decompressed the repository, and you're ready to go.
+
+## Dependencies
+
+* [font-awesome](https://www.bootstrapcdn.com/fontawesome/)
+
+* [Coda and Orbitron fonts](https://fonts.google.com/)
+
 ## Resources
-
-font-awesome:
-
-https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css
-
-Coda and Orbitron fonts:
-
-https://fonts.googleapis.com/css?family=Coda|Orbitron
 
 For help with the modal box, I visited [this page](https://www.w3schools.com/howto/howto_css_modals.asp) on W3Schools.
