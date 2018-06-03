@@ -18,11 +18,18 @@ const winModal = document.getElementById("win-modal");
 let starScore = 3;
 const playAgainButton = document.querySelector("#play-again");
 const noThanksButton = document.querySelector("#no-thanks");
+let theTime = 0;
 //running timer at the top of the screen
-let runTimer = setInterval( function () {
-    timer.innerHTML = `${Math.round((performance.now()-startingTime)/1000,1)}`;
-  }, 100);
+let clockRun = setInterval(theClock, 1000)
 
+function theClock () {
+    theTime = `${Math.round((performance.now()-startingTime)/1000)}`;
+    timer.innerHTML = formatTime(theTime);
+}
+
+function stopTheClock () {
+  clearInterval(clockRun);
+}
 
 const cardCheck = function(event) {
   if ((clearList.includes(event.target))||(openList[0] === event.target)){
@@ -47,7 +54,7 @@ const cardCheck = function(event) {
  *   - add each card's HTML to the page
  */
 const newGame = function() {
-  clearInterval(runTimer);
+  stopTheClock();
   let newDeck = document.createElement("ul");
   newDeck.className = "deck";
   for (const cardSymbol of (shuffle(symbolArray))){
@@ -65,6 +72,7 @@ const newGame = function() {
   oldDeck.parentNode.replaceChild(newDeck, oldDeck);
   oldDeck = newDeck;
   deckListener();
+  openList = [];
   clearList = [];
 }
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -93,7 +101,7 @@ function cardFlip(theCard){
   addToOpenList(theCard);
   // trying to start the timer with the proper checks in place
   if ((moveScore === 0) && (openList.length === 1)) {
-    runTimer;
+    clockRun = setInterval(theClock, 1000);
     startingTime = performance.now();
   }
 }
@@ -148,11 +156,12 @@ function flipThemBack(theCard){
 }
 //winner function with modal
 const youAreTheWinner = function(){
+  stopTheClock();
   endingTime = performance.now();
   winModal.style.display = "block";
   document.getElementById("modal-text").innerHTML = `Way to go! You won in
-  ${moveScore} moves! It took ${Math.round((endingTime-startingTime)/1000)}
-  seconds. You scored ${starScore} stars!`;
+  ${moveScore} moves! It took ${formatTime(Math.round((endingTime-startingTime)/1000))}
+  . You scored ${starScore} stars!`;
 }
 
 playAgainButton.addEventListener("click", function (){
@@ -179,7 +188,14 @@ const theStars = function(score) {
   }
 }
 
-
+function formatTime(someTime) {
+  let minutes = Math.floor(someTime/60);
+  let seconds = someTime - minutes * 60;
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
+  return `${minutes}:${seconds}`
+}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
