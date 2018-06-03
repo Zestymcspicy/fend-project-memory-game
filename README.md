@@ -4,6 +4,7 @@
 
 * [Instructions](#instructions)
 * [Contributing](#contributing)
+* [Resources](#resources)
 
 ## Instructions
 
@@ -19,7 +20,7 @@ This repository is the starter code for _all_ Udacity students. Therefore, we mo
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Dependencies
+## Resources
 
 font-awesome:
 https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css
